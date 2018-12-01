@@ -6,7 +6,8 @@ SELF_BUILD_NUM="${CIRCLE_BUILD_NUM}"
 
 getRunningJobs() {
   local runningJobs
-  
+  echo "$BASE_URL"
+  echo "$AUTH_PARAMS"  
   runningJobs=$(curl -s -S "$BASE_URL/tree/$CIRCLE_BRANCH?$AUTH_PARAMS" | jq "map(if .status == \"running\" or .status == \"not_running\"  then .build_num else \"None\" end) - [${SELF_BUILD_NUM}] - [\"None\"] | .[]")
   echo "$runningJobs"
 }
